@@ -252,7 +252,14 @@
             </p>
             <p class="fineprint" style="margin-top: 14px">We’ll reply by email.</p>
           </div>
-          <form class="form" id="lead-form" aria-label="Contact form" method="POST" novalidate>
+          <form
+            class="form"
+            id="lead-form"
+            aria-label="Contact form"
+            action="https://formspree.io/f/mvzddkjl"
+            method="POST"
+            novalidate
+          >
             <label>
               <span>Name</span>
               <input name="name" autocomplete="name" placeholder="Your name" required />
@@ -336,23 +343,18 @@
         if (e.key === "Escape") setOpen(false);
       });
 
-      // Lead form (no backend): uses a hosted form endpoint (e.g., Formspree)
-      const FORM_ENDPOINT = "https://formspree.io/f/REPLACE_ME";
+      // Lead form (no backend): uses Formspree
+      const FORM_ENDPOINT = "https://formspree.io/f/mvzddkjl";
       const leadForm = document.querySelector("#lead-form");
       const leadStatus = document.querySelector("#lead-form-status");
 
       leadForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (FORM_ENDPOINT.includes("REPLACE_ME")) {
-          leadStatus.textContent =
-            "Form is not connected yet. Replace the form endpoint in the page to start receiving leads.";
-          return;
-        }
-
         leadStatus.textContent = "Sending…";
         try {
           const formData = new FormData(leadForm);
-          const res = await fetch(FORM_ENDPOINT, {
+          const endpoint = leadForm.getAttribute("action") || FORM_ENDPOINT;
+          const res = await fetch(endpoint, {
             method: "POST",
             body: formData,
             headers: { Accept: "application/json" },
