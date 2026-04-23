@@ -73,7 +73,11 @@
           <a href="#product">Product</a>
           <a href="#use-cases">Use cases</a>
           <a href="#insight">Insight</a>
-          <a href="#contact" class="btn btn-secondary">Talk to us</a>
+          <a
+            href="mailto:richardcrounse@gmail.com?subject=Asset-Energy%20AI%20Inquiry"
+            class="btn btn-secondary"
+            >Talk to us</a
+          >
         </nav>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
@@ -87,7 +91,11 @@
           <a href="#product">Product</a>
           <a href="#use-cases">Use cases</a>
           <a href="#insight">Insight</a>
-          <a href="#contact" class="btn btn-secondary">Talk to us</a>
+          <a
+            href="mailto:richardcrounse@gmail.com?subject=Asset-Energy%20AI%20Inquiry"
+            class="btn btn-secondary"
+            >Talk to us</a
+          >
         </div>
       </div>
     </header>
@@ -104,7 +112,11 @@
             </p>
 
             <div class="hero-ctas">
-              <a class="btn btn-primary" href="#contact">Request a demo</a>
+              <a
+                class="btn btn-primary"
+                href="mailto:richardcrounse@gmail.com?subject=Asset-Energy%20AI%20Inquiry"
+                >Email us</a
+              >
               <a class="btn btn-ghost" href="#insight">See the framing</a>
             </div>
 
@@ -271,32 +283,17 @@
               Tell us whether you’re focused on Oil &amp; Gas operations or data center growth. We’ll respond with
               how we’d structure the analysis and what a demo would include.
             </p>
+            <div style="margin-top: 14px">
+              <a
+                class="btn btn-primary"
+                href="mailto:richardcrounse@gmail.com?subject=Asset-Energy%20AI%20Inquiry&amp;body=Hi%20Richard%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20Asset-Energy%20AI.%20Here%27s%20what%20I%27m%20trying%20to%20decide%3A%0A%0A%5Bwrite%20here%5D%0A"
+                >Email us</a
+              >
+              <p class="fineprint" style="margin-top: 10px">
+                Prefer email? Click above to open your mail app. No form submission required.
+              </p>
+            </div>
           </div>
-
-          <form class="form" onsubmit="return false" aria-label="Contact form">
-            <label>
-              <span>Name</span>
-              <input autocomplete="name" name="name" placeholder="Your name" required />
-            </label>
-            <label>
-              <span>Email</span>
-              <input autocomplete="email" name="email" type="email" placeholder="you@company.com" required />
-            </label>
-            <label>
-              <span>What are you trying to decide?</span>
-              <textarea
-                name="message"
-                rows="3"
-                placeholder="Example: Which sites should we target first for efficiency upgrades, and what’s the grid risk?"
-                required
-              ></textarea>
-            </label>
-            <button class="btn btn-primary" type="submit">Send</button>
-            <p class="fineprint">
-              This form submits to <code>/api/contact</code> (Cloudflare Pages Function in production).
-            </p>
-            <p class="fineprint" id="form-status" aria-live="polite"></p>
-          </form>
         </div>
       </section>
     </main>
@@ -346,71 +343,6 @@
 
       window.addEventListener("keydown", (e) => {
         if (e.key === "Escape") setOpen(false);
-      });
-
-      const form = document.querySelector("form.form");
-      const statusEl = document.querySelector("#form-status");
-
-      async function readErrorDetails(res) {
-        const ct = res.headers.get("content-type") || "";
-        const raw = await res.text().catch(() => "");
-
-        if (ct.includes("application/json")) {
-          try {
-            return JSON.parse(raw);
-          } catch {
-            return { raw };
-          }
-        }
-
-        return { raw };
-      }
-
-      form?.addEventListener("submit", async () => {
-        if (!(form instanceof HTMLFormElement)) return;
-        const submitBtn = form.querySelector("button[type='submit']");
-        if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = true;
-
-        statusEl.textContent = "Sending…";
-
-        const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
-
-        try {
-          const res = await fetch("/api/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          const data = res.ok ? await res.json().catch(() => null) : await readErrorDetails(res);
-          if (!res.ok || !data?.ok) {
-            const hint = data?.hint ? ` ${data.hint}` : "";
-            const providerMsg = data?.provider?.message;
-            const cfMsg = data?.cloudflare?.errors?.[0]?.message;
-            const rawSnippet =
-              typeof data?.raw === "string" && data.raw.trim()
-                ? ` (response: ${data.raw.trim().slice(0, 180)}${data.raw.trim().length > 180 ? "…" : ""})`
-                : "";
-            const detail = providerMsg
-              ? ` (${providerMsg})`
-              : cfMsg
-                ? ` (${cfMsg})`
-                : data?.error
-                  ? ` (${data.error})`
-                  : rawSnippet
-                    ? rawSnippet
-                    : "";
-            throw new Error(`HTTP ${res.status}${detail}${hint}`);
-          }
-          form.reset();
-          statusEl.textContent = "Thanks — message received. We’ll follow up shortly.";
-        } catch (e) {
-          const msg = e instanceof Error ? e.message : "Request failed";
-          statusEl.textContent = `Couldn’t send right now. ${msg}`;
-        } finally {
-          if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
-        }
       });
     </script>
   </body>
