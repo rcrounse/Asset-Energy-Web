@@ -44,6 +44,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
 
     <script type="application/ld+json">
       {
@@ -248,6 +253,14 @@
             <p class="fineprint" style="margin-top: 14px">
               Contact is currently disabled on this site.
             </p>
+          </div>
+          <div class="form" aria-label="Verification">
+            <div>
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAADB5Yf2D3stdSrnyY"></div>
+              <p class="fineprint" style="margin-top: 10px">
+                Verification is enabled to reduce automated spam.
+              </p>
+            </div>
           </div>
         </div>
       </section>
