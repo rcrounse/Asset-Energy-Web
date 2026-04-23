@@ -250,18 +250,41 @@
               Tell us whether you’re focused on Oil &amp; Gas operations or data center growth. We’ll respond with
               how we’d structure the analysis and what a demo would include.
             </p>
-            <p class="fineprint" style="margin-top: 14px">
-              Contact is currently disabled on this site.
-            </p>
+            <p class="fineprint" style="margin-top: 14px">We’ll reply by email.</p>
           </div>
-          <div class="form" aria-label="Verification">
-            <div>
-              <div class="cf-turnstile" data-sitekey="0x4AAAAAADB5Yf2D3stdSrnyY"></div>
-              <p class="fineprint" style="margin-top: 10px">
-                Verification is enabled to reduce automated spam.
-              </p>
-            </div>
-          </div>
+          <form class="form" id="lead-form" aria-label="Contact form" method="POST" novalidate>
+            <label>
+              <span>Name</span>
+              <input name="name" autocomplete="name" placeholder="Your name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+                required
+              />
+            </label>
+            <label>
+              <span>Company (optional)</span>
+              <input name="company" autocomplete="organization" placeholder="Company" />
+            </label>
+            <label>
+              <span>What do you want to achieve?</span>
+              <textarea
+                name="message"
+                placeholder="Example: reduce heat & emissions at facilities, or de-risk data center capacity growth."
+                required
+              ></textarea>
+            </label>
+
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAADB5Yf2D3stdSrnyY"></div>
+
+            <button class="btn btn-primary" type="submit">Send</button>
+            <p class="fineprint" id="lead-form-status" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </section>
     </main>
@@ -311,6 +334,35 @@
 
       window.addEventListener("keydown", (e) => {
         if (e.key === "Escape") setOpen(false);
+      });
+
+      // Lead form (no backend): uses a hosted form endpoint (e.g., Formspree)
+      const FORM_ENDPOINT = "https://formspree.io/f/REPLACE_ME";
+      const leadForm = document.querySelector("#lead-form");
+      const leadStatus = document.querySelector("#lead-form-status");
+
+      leadForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (FORM_ENDPOINT.includes("REPLACE_ME")) {
+          leadStatus.textContent =
+            "Form is not connected yet. Replace the form endpoint in the page to start receiving leads.";
+          return;
+        }
+
+        leadStatus.textContent = "Sending…";
+        try {
+          const formData = new FormData(leadForm);
+          const res = await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            body: formData,
+            headers: { Accept: "application/json" },
+          });
+          if (!res.ok) throw new Error("Request failed");
+          leadForm.reset();
+          leadStatus.textContent = "Sent. We’ll reply by email.";
+        } catch {
+          leadStatus.textContent = "Couldn’t send right now. Please try again in a moment.";
+        }
       });
     </script>
   </body>
