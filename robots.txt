@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asset-energy.ai/sitemap.xml
+
