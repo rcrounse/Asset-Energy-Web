@@ -113,7 +113,7 @@ img {
 }
 
 .brand-logo {
-  height: 40px;
+  height: 52px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -688,7 +688,7 @@ textarea:focus {
 }
 
 .footer-logo {
-  height: 34px;
+  height: 44px;
   width: auto;
   display: block;
   object-fit: contain;
