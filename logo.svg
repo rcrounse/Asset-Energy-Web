@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 160" role="img" aria-label="Asset-Energy.ai">
+  <title>Asset-Energy.ai</title>
+  <defs>
+    <style>
+      .r{fill:#ff2d2d}
+      .t{fill:#ff2d2d;font: 700 96px/1.1 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; letter-spacing:-0.04em}
+    </style>
+  </defs>
+
+  <!-- molecule mark -->
+  <g transform="translate(14,14)">
+    <circle class="r" cx="30" cy="30" r="18"/>
+    <circle class="r" cx="102" cy="20" r="18"/>
+    <circle class="r" cx="92" cy="94" r="18"/>
+    <circle class="r" cx="34" cy="104" r="18"/>
+    <circle class="r" cx="62" cy="62" r="12"/>
+    <path class="r" d="M44 40 L54 54" stroke="#ff2d2d" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path class="r" d="M74 56 L92 40" stroke="#ff2d2d" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path class="r" d="M74 70 L86 84" stroke="#ff2d2d" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path class="r" d="M50 74 L42 88" stroke="#ff2d2d" stroke-width="10" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- wordmark -->
+  <text class="t" x="170" y="112">Asset-Energy.ai</text>
+</svg>
