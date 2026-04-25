@@ -110,13 +110,18 @@ img {
   gap: 12px;
   align-items: center;
   min-width: 220px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand-logo {
-  height: 34px;
+  height: 38px;
   width: auto;
   display: block;
   object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
 }
 
 .brand-mark {
