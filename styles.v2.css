@@ -559,6 +559,23 @@ img {
   margin: 0;
 }
 
+.news-byline {
+  margin: 10px 0 0;
+  color: var(--faint);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.news-body a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-color: rgba(118, 230, 200, 0.45);
+}
+
+.news-body a:hover {
+  color: var(--text);
+}
+
 .news-body {
   padding: 16px 22px 0;
   max-width: 65ch;

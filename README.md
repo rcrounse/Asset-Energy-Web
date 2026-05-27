@@ -16,6 +16,16 @@ python3 -m http.server 5173
 
 Then open `http://localhost:5173`.
 
+## News (standalone articles)
+
+Posts live on your site in `news.html`—no LinkedIn embed required.
+
+1. Open `news.html` in an editor.
+2. Copy the whole `<article class="news-article">…</article>` block.
+3. Paste it above the previous post, change the date, headline, and paragraphs.
+4. Update the teaser on `index.html` (hero News panel) if you want the homepage to highlight the new title.
+5. Commit and push (GitHub Desktop → **Push origin**).
+
 ## Next steps (optional)
 
 - Deploy to Cloudflare Pages (static).
