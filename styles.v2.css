@@ -392,6 +392,11 @@ img {
   overflow: hidden;
 }
 
+.hero-side {
+  display: grid;
+  gap: 14px;
+}
+
 .hero-card-top {
   padding: 18px 18px 0;
 }
@@ -449,6 +454,73 @@ img {
 
 .hero-card-bottom {
   padding: 10px 18px 18px;
+}
+
+.news-card {
+  border-radius: calc(var(--radius) + 4px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: var(--shadow-soft);
+  padding: 16px 16px;
+}
+
+.news-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.news-title {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.news-link {
+  color: var(--muted);
+  font-weight: 650;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.news-link:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.news-list {
+  list-style: none;
+  margin: 12px 0 10px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.news-list li {
+  display: grid;
+  gap: 2px;
+}
+
+.news-list a {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.news-list a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: rgba(122, 167, 255, 0.5);
+}
+
+.news-meta {
+  color: var(--faint);
+  font-size: 12.5px;
 }
 
 .fineprint {
