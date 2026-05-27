@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Emissions are projected to worsen with the pending rollback of EPA ruling on CO₂ and other related greenhouse gases."
+    />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://asset-energy.ai/news/you-can-run-but-you-cant-hide-co2.html" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Asset-Energy AI" />
+    <meta property="og:title" content="You can run but you can’t hide CO₂ | Asset-Energy AI" />
+    <meta
+      property="og:description"
+      content="Emissions are projected to worsen with the pending rollback of EPA ruling on CO₂ and other related greenhouse gases."
+    />
+    <meta property="og:url" content="https://asset-energy.ai/news/you-can-run-but-you-cant-hide-co2.html" />
+
+    <title>You can run but you can’t hide CO₂ | Asset-Energy AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.v2.css?v=news6" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../" aria-label="Asset-Energy AI home">
+          <img
+            class="brand-logo"
+            src="../asset-energy.ai.cropped.png"
+            alt="asset-energy.ai"
+            width="650"
+            height="103"
+          />
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="../#product">Product</a>
+          <a href="../#use-cases">Use cases</a>
+          <a href="../news.html">News</a>
+          <a href="../#contact" class="btn btn-secondary">Talk to us</a>
+        </nav>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+          <span class="sr-only">Open menu</span>
+          <span aria-hidden="true" class="nav-toggle-icon"></span>
+        </button>
+      </div>
+
+      <div id="mobile-nav" class="mobile-nav" hidden>
+        <div class="container mobile-nav-inner">
+          <a href="../#product">Product</a>
+          <a href="../#use-cases">Use cases</a>
+          <a href="../news.html">News</a>
+          <a href="../#contact" class="btn btn-secondary">Talk to us</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="news-page news-article-page">
+      <article class="container article-full">
+        <header class="article-full-head">
+          <p class="news-meta"><a href="../news.html">News</a> · May 27, 2026</p>
+          <h1>You can run but you can’t hide CO₂</h1>
+        </header>
+
+        <div class="article-full-body">
+          <p class="article-lead">
+            Emissions are projected to worsen with the pending rollback of EPA ruling on CO₂ and other related
+            greenhouse gases.
+          </p>
+          <p>Do you support this action?</p>
+        </div>
+
+        <footer class="article-full-foot">
+          <p class="fineprint">
+            <a href="../news.html">← All news</a>
+            ·
+            <a href="../">Home</a>
+          </p>
+        </footer>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="../asset-energy.ai.cropped.png" alt="asset-energy.ai" width="550" height="85" />
+        </div>
+        <div class="footer-links">
+          <a href="../#product">Product</a>
+          <a href="../#use-cases">Use cases</a>
+          <a href="../news.html">News</a>
+          <a href="../#contact">Contact</a>
+        </div>
+        <div class="footer-meta">
+          <span>© <span id="year"></span> Asset-Energy AI</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector(".nav-toggle");
+      const mobileNav = document.querySelector("#mobile-nav");
+      const year = document.querySelector("#year");
+
+      year.textContent = String(new Date().getFullYear());
+
+      function setOpen(nextOpen) {
+        toggle.setAttribute("aria-expanded", String(nextOpen));
+        mobileNav.hidden = !nextOpen;
+        document.body.classList.toggle("no-scroll", nextOpen);
+      }
+
+      toggle?.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        setOpen(!isOpen);
+      });
+
+      mobileNav?.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target instanceof HTMLAnchorElement) setOpen(false);
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+      });
+    </script>
+  </body>
+</html>
