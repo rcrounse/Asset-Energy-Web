@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="News and updates from Asset-Energy AI on energy efficiency, emissions, and the energy transition."
+    />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://asset-energy.ai/news.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Asset-Energy AI" />
+    <meta property="og:title" content="News | Asset-Energy AI" />
+    <meta
+      property="og:description"
+      content="Updates on energy efficiency, emissions management, and the energy transition."
+    />
+    <meta property="og:url" content="https://asset-energy.ai/news.html" />
+
+    <title>News | Asset-Energy AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.v2.css?v=news2" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="./" aria-label="Asset-Energy AI home">
+          <img
+            class="brand-logo"
+            src="./asset-energy.ai.cropped.png"
+            alt="asset-energy.ai"
+            width="650"
+            height="103"
+          />
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="./#product">Product</a>
+          <a href="./#use-cases">Use cases</a>
+          <a href="./news.html" aria-current="page">News</a>
+          <a href="./#contact" class="btn btn-secondary">Talk to us</a>
+        </nav>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+          <span class="sr-only">Open menu</span>
+          <span aria-hidden="true" class="nav-toggle-icon"></span>
+        </button>
+      </div>
+
+      <div id="mobile-nav" class="mobile-nav" hidden>
+        <div class="container mobile-nav-inner">
+          <a href="./#product">Product</a>
+          <a href="./#use-cases">Use cases</a>
+          <a href="./news.html" aria-current="page">News</a>
+          <a href="./#contact" class="btn btn-secondary">Talk to us</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="news-page">
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h1>News</h1>
+            <p>Updates on energy efficiency, emissions, and the transition for producers and consumers.</p>
+          </div>
+
+          <div class="news-feed">
+            <article class="news-article" id="latest">
+              <header class="news-article-head">
+                <h2>Latest update</h2>
+                <p class="news-meta">LinkedIn · May 2026</p>
+              </header>
+              <div class="news-embed">
+                <iframe
+                  src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7465425156950290432?collapsed=1"
+                  height="531"
+                  width="504"
+                  frameborder="0"
+                  allowfullscreen=""
+                  title="Embedded post"
+                ></iframe>
+              </div>
+            </article>
+          </div>
+
+          <p class="fineprint" style="margin-top: 24px">
+            <a href="./">← Back to home</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="./asset-energy.ai.cropped.png" alt="asset-energy.ai" width="550" height="85" />
+        </div>
+        <div class="footer-links">
+          <a href="./#product">Product</a>
+          <a href="./#use-cases">Use cases</a>
+          <a href="./news.html">News</a>
+          <a href="./#contact">Contact</a>
+        </div>
+        <div class="footer-meta">
+          <span>© <span id="year"></span> Asset-Energy AI</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector(".nav-toggle");
+      const mobileNav = document.querySelector("#mobile-nav");
+      const year = document.querySelector("#year");
+
+      year.textContent = String(new Date().getFullYear());
+
+      function setOpen(nextOpen) {
+        toggle.setAttribute("aria-expanded", String(nextOpen));
+        mobileNav.hidden = !nextOpen;
+        document.body.classList.toggle("no-scroll", nextOpen);
+      }
+
+      toggle?.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        setOpen(!isOpen);
+      });
+
+      mobileNav?.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target instanceof HTMLAnchorElement) setOpen(false);
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+      });
+    </script>
+  </body>
+</html>
