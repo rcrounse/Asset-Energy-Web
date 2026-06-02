@@ -60,10 +60,28 @@ The site already shows **contact@asset-energy.ai** in the contact section and fo
 
 ---
 
+## Automated setup (recommended)
+
+If inbound mail fails (Gmail “temporary problem delivering”), the domain usually has **no MX records**. Fix with the script in this repo:
+
+1. Create an API token: [Cloudflare API tokens](https://dash.cloudflare.com/profile/api-tokens) → **Create Token** → **Custom token**
+   - **Zone** → `asset-energy.ai` → DNS:Edit, Email Routing Rules:Edit, Email Routing:Edit, Zone:Read
+   - **Account** → Email Routing Addresses:Edit
+2. Copy `Asset-Energy-Web/.env.example` to `.env` and set `CLOUDFLARE_API_TOKEN`
+3. Run:
+
+```bash
+cd "/Users/richardcrounse/Documents/Asset-Energy-Web"
+python3 scripts/setup-email-routing.py
+```
+
+If Cloudflare sends a **destination verification** email to Gmail, click the link, then run the script again.
+
 ## Troubleshooting
 
 | Problem | Fix |
 |--------|-----|
+| Gmail “temporary problem delivering” to contact@ | No MX on the domain — run `scripts/setup-email-routing.py` or finish Email Routing in Cloudflare |
 | Verification email never arrives | Check Cloudflare Email Routing is **Enabled** and DNS records show **Active** |
 | Can receive but not send as @asset-energy.ai | Finish Gmail “Send mail as” or use Gmail + professional signature with contact@ in signature |
 | Formspree still goes to old email | Update notification address in Formspree dashboard |

@@ -18,15 +18,27 @@ Then open `http://localhost:5173`.
 
 ## News (standalone articles)
 
-- `news.html` — list of posts (teaser + link)
-- `news/your-article-slug.html` — full article page (edit the HTML body here)
+- `news/posts.json` — source of truth (title/date/slug/excerpt)
+- `news.html` — generated list of posts (do not edit by hand)
+- `news/your-article-slug.html` — full article page
 
 To add a post:
 
-1. Copy `news/you-can-run-but-you-cant-hide-co2.html` to a new file under `news/`.
-2. Edit the title and all `<p>` paragraphs in `.article-full-body`.
-3. Add a matching preview block to `news.html` with a link to your new file.
-4. Commit and push (GitHub Desktop → **Push origin**).
+1. Run:
+
+```bash
+cd "/Users/richardcrounse/Documents/Asset-Energy-Web"
+python3 scripts/new-oped.py "Your headline" --deck "One-sentence summary"
+```
+
+2. Open the created file under `news/` in Cursor and write the OpEd (edit `.article-full-body`).
+3. Commit and push (GitHub Desktop → **Push origin**).
+
+If you ever need to regenerate the index:
+
+```bash
+python3 scripts/build-news.py
+```
 
 ## Next steps (optional)
 

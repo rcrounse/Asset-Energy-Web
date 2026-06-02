@@ -1,0 +1,259 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+from dataclasses import dataclass
+from datetime import date, datetime
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parent.parent
+POSTS_PATH = ROOT / "news" / "posts.json"
+NEWS_INDEX_PATH = ROOT / "news.html"
+
+
+@dataclass(frozen=True)
+class Post:
+    slug: str
+    title: str
+    date: date
+    category: str
+    excerpt: str
+    canonical_path: str
+
+    @property
+    def href(self) -> str:
+        # Keep links consistent with existing site style: ./news/<file>.html
+        return f"./news/{self.slug}.html"
+
+    @property
+    def display_date(self) -> str:
+        # Match existing format: "May 27, 2026"
+        return self.date.strftime("%b %d, %Y").replace(" 0", " ")
+
+
+def load_posts() -> list[Post]:
+    raw = json.loads(POSTS_PATH.read_text(encoding="utf-8"))
+    posts: list[Post] = []
+    for item in raw:
+        d = datetime.strptime(item["date"], "%Y-%m-%d").date()
+        posts.append(
+            Post(
+                slug=item["slug"],
+                title=item["title"],
+                date=d,
+                category=item.get("category", "News"),
+                excerpt=item.get("excerpt", "").strip(),
+                canonical_path=item.get("canonicalPath", f"/news/{item['slug']}.html"),
+            )
+        )
+    posts.sort(key=lambda p: p.date, reverse=True)
+    return posts
+
+
+def render_post_card(p: Post) -> str:
+    excerpt = (p.excerpt or "").strip()
+    if excerpt.endswith("."):
+        excerpt_sentence = excerpt
+    else:
+        excerpt_sentence = f"{excerpt}." if excerpt else ""
+
+    return f"""\
+            <article class="news-article news-preview">
+              <header class="news-article-head">
+                <p class="news-meta">{p.display_date}</p>
+                <h2>
+                  <a href="{p.href}">{escape_html(p.title)}</a>
+                </h2>
+              </header>
+              <p class="news-excerpt">
+                {escape_html(excerpt_sentence)}
+              </p>
+              <p class="news-read-more">
+                <a class="btn btn-ghost" href="{p.href}">Read article</a>
+              </p>
+            </article>"""
+
+
+def escape_html(value: str) -> str:
+    return (
+        (value or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
+def render_news_html(posts: list[Post]) -> str:
+    cards = "\n".join(render_post_card(p) for p in posts)
+
+    # Keep the rest of the page identical to the existing design; only the feed is generated.
+    return f"""\
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="News and updates from Asset-Energy AI on energy efficiency, emissions, and the energy transition."
+    />
+    <meta name="theme-color" content="#0b1220" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://asset-energy.ai/news.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Asset-Energy AI" />
+    <meta property="og:title" content="News | Asset-Energy AI" />
+    <meta
+      property="og:description"
+      content="Updates on energy efficiency, emissions management, and the energy transition."
+    />
+    <meta property="og:url" content="https://asset-energy.ai/news.html" />
+
+    <title>News | Asset-Energy AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.v2.css?v=news7" />
+  </head>
+
+  <body>
+    <!--
+      GENERATED FILE — DO NOT EDIT
+      Source of truth: news/posts.json
+      Regenerate: python3 scripts/build-news.py
+    -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="./" aria-label="Asset-Energy AI home">
+          <img
+            class="brand-logo"
+            src="./asset-energy.ai.cropped.png"
+            alt="asset-energy.ai"
+            width="650"
+            height="103"
+          />
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="./#product">Product</a>
+          <a href="./#use-cases">Use cases</a>
+          <a href="./news.html" aria-current="page">News</a>
+          <a href="./#contact" class="btn btn-secondary">Talk to us</a>
+        </nav>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+          <span class="sr-only">Open menu</span>
+          <span aria-hidden="true" class="nav-toggle-icon"></span>
+        </button>
+      </div>
+
+      <div id="mobile-nav" class="mobile-nav" hidden>
+        <div class="container mobile-nav-inner">
+          <a href="./#product">Product</a>
+          <a href="./#use-cases">Use cases</a>
+          <a href="./news.html" aria-current="page">News</a>
+          <a href="./#contact" class="btn btn-secondary">Talk to us</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="news-page">
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h1>News</h1>
+            <p>Updates on energy efficiency, emissions, and the transition for producers and consumers.</p>
+          </div>
+
+          <div class="news-feed news-index">
+{cards}
+          </div>
+
+          <p class="fineprint" style="margin-top: 24px">
+            <a href="./">← Back to home</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="./asset-energy.ai.cropped.png" alt="asset-energy.ai" width="550" height="85" />
+        </div>
+        <div class="footer-links">
+          <a href="./#product">Product</a>
+          <a href="./#use-cases">Use cases</a>
+          <a href="./news.html">News</a>
+          <a href="./#contact">Contact</a>
+        </div>
+        <div class="footer-meta">
+          <span>© <span id="year"></span> Asset-Energy AI</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector(".nav-toggle");
+      const mobileNav = document.querySelector("#mobile-nav");
+      const year = document.querySelector("#year");
+
+      year.textContent = String(new Date().getFullYear());
+
+      function setOpen(nextOpen) {{
+        toggle.setAttribute("aria-expanded", String(nextOpen));
+        mobileNav.hidden = !nextOpen;
+        document.body.classList.toggle("no-scroll", nextOpen);
+      }}
+
+      toggle?.addEventListener("click", () => {{
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        setOpen(!isOpen);
+      }});
+
+      mobileNav?.addEventListener("click", (e) => {{
+        const target = e.target;
+        if (target instanceof HTMLAnchorElement) setOpen(false);
+      }});
+
+      window.addEventListener("keydown", (e) => {{
+        if (e.key === "Escape") setOpen(false);
+      }});
+    </script>
+  </body>
+</html>
+"""
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Regenerate news.html from news/posts.json")
+    parser.add_argument("--check", action="store_true", help="Exit non-zero if news.html is out of date")
+    args = parser.parse_args()
+
+    posts = load_posts()
+    html = render_news_html(posts)
+    if args.check:
+        current = NEWS_INDEX_PATH.read_text(encoding="utf-8") if NEWS_INDEX_PATH.exists() else ""
+        if current != html:
+            raise SystemExit("news.html is out of date. Run: python3 scripts/build-news.py")
+        print("news.html is up to date.")
+        return
+
+    NEWS_INDEX_PATH.write_text(html, encoding="utf-8")
+    print(f"Wrote {NEWS_INDEX_PATH.relative_to(ROOT)} ({len(posts)} post(s))")
+
+
+if __name__ == "__main__":
+    main()
+
